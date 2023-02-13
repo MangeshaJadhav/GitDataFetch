@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        text-align: center;
+      }
+      .container {
+        border: 0.5vw solid black;
+        background: salmon;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>Page 2</h3>
+      <ol id="tag">
+        Issue Name:-Title is
+      </ol>
+      <button id="btnBack">Go Back</button>
+    </div>
+
+    
+    <script>
+      //btn for go back
+      let btn = document.getElementById("btnBack");
+      btn.addEventListener("click", () => {
+        window.history.back();
+      });
+
+      //api for fetch data for this page
+
+      //Take a data from api using fetch
+      fetch(
+        "https://api.github.com/repositories/1296269/issues?page=$%7BpageNumberHere%7D&per_page=5"
+      )
+        .then((res) => {
+          // console.log(res);
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data); //now we got array of object data here
+          data.forEach((user) => {
+            const markup = `<li>${user.title}</li>`;
+
+            document
+              .querySelector("ol")
+              .insertAdjacentHTML("beforeend", markup);
+          });
+        })
+        .catch((error) => console.log(error));
+    </script>
+  </body>
+</html>
